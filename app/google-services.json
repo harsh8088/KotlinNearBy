@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "215534536433",
+    "firebase_url": "https://nearby-4624d.firebaseio.com",
+    "project_id": "nearby-4624d",
+    "storage_bucket": "nearby-4624d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215534536433:android:32b6f9f28c2d6b80",
+        "android_client_info": {
+          "package_name": "com.hrawat.nearby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215534536433-e123blhcu5dh2jeuvodhvrnevlb73ukn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrawat.nearby",
+            "certificate_hash": "2b27049cf21e245f2e92bfdc2e030d5fe2ea3d05"
+          }
+        },
+        {
+          "client_id": "215534536433-b3s61jvfj714hkskj4oquhs9hd1pg21s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrawat.nearby",
+            "certificate_hash": "30baa8af81c38fbedd38efc14b19d85a0f31797d"
+          }
+        },
+        {
+          "client_id": "215534536433-fipsoqfutcal2gg6rq6v4a48674f0co3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXdDc7NoWf3ePphJrpGNEe-HwTTLZxn7M"
+        },
+        {
+          "current_key": "AIzaSyCZJX62yH5yyo5mYPAr_eAvcJhYlsBGPbw"
+        },
+        {
+          "current_key": "AIzaSyCv8seZhHw_dSH06bF5NZhhxY_mw4Bt5aQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215534536433-fipsoqfutcal2gg6rq6v4a48674f0co3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215534536433:android:0f5d4a3d4d23723c",
+        "android_client_info": {
+          "package_name": "com.hrawat.kotlinnearby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215534536433-jgpaamq40c2qmjcuc597m63t7b517f5g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrawat.kotlinnearby",
+            "certificate_hash": "30baa8af81c38fbedd38efc14b19d85a0f31797d"
+          }
+        },
+        {
+          "client_id": "215534536433-fipsoqfutcal2gg6rq6v4a48674f0co3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXdDc7NoWf3ePphJrpGNEe-HwTTLZxn7M"
+        },
+        {
+          "current_key": "AIzaSyCZJX62yH5yyo5mYPAr_eAvcJhYlsBGPbw"
+        },
+        {
+          "current_key": "AIzaSyCv8seZhHw_dSH06bF5NZhhxY_mw4Bt5aQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215534536433-fipsoqfutcal2gg6rq6v4a48674f0co3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
