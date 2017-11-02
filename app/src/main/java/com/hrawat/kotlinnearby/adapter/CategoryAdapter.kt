@@ -17,7 +17,7 @@ import java.util.*
 class CategoryAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var categoryListener: CategoryListener? = null
-    private  var nearByCategoryList= ArrayList<NearByCategory>()
+    private var nearByCategoryList = ArrayList<NearByCategory>()
 
     interface CategoryListener {
 
@@ -34,17 +34,18 @@ class CategoryAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        val details = nearByCategoryList[position]
-        val viewHolder = holder as CategoryViewHolder
+        if (holder is CategoryViewHolder) {
+            val details = nearByCategoryList[position]
 //        viewHolder.icon.(details.getIcon());
 //        viewHolder.background
-        viewHolder.categoryName.text=details.name
-        viewHolder.background.setOnClickListener(View.OnClickListener
-        { categoryListener?.onCategoryClick(this@CategoryAdapter, details.name) })
+            holder.categoryName.text = details.name
+            holder.background.setOnClickListener(View.OnClickListener
+            { categoryListener?.onCategoryClick(this@CategoryAdapter, details.name) })
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_nearby_category_list, parent,false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_nearby_category_list, null)
         return CategoryViewHolder(view)
     }
 
@@ -55,11 +56,11 @@ class CategoryAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
     }
 
 
-    private inner class CategoryViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val background: ImageView = view.findViewById<ImageView>(R.id.iv_category_background)
-        val icon: ImageView = view.findViewById<ImageView>(R.id.iv_category_icon)
-        val categoryName: TextView = view.findViewById<TextView>(R.id.tv_category_name)
+        val background: ImageView = view.findViewById(R.id.iv_category_background)
+        val icon: ImageView = view.findViewById(R.id.iv_category_icon)
+        val categoryName: TextView = view.findViewById(R.id.tv_category_name)
 
     }
 

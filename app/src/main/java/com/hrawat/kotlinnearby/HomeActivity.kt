@@ -1,7 +1,6 @@
 package com.hrawat.kotlinnearby
 
 import android.Manifest
-import android.app.ListActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -34,13 +33,17 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
 
-    val LOCATION_LATITUDE = "LOCATION_LATITUDE"
-    val LOCATION_LONGITUTE = "LOCATION_LONGITUTE"
+    companion object {
+        val LOCATION_LATITUDE: String = "LOCATION_LATITUDE"
+        val LOCATION_LONGITUTE: String = "LOCATION_LONGITUTE"
+    }
+
+
     private val TAG = this.javaClass.name
-    private var categoryAdapter: CategoryAdapter? = null
-    protected lateinit var mLastLocation: Location
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var mLastLocation: Location
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val REQUEST_PERMISSIONS_REQUEST_CODE: Int = 34
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +64,9 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         recyclerView.adapter = categoryAdapter
         categoryAdapter!!.setCategoryListener(object : CategoryAdapter.CategoryListener {
             override fun onCategoryClick(categoryAdapter: CategoryAdapter, categoryName: String) {
-//                val intent = Intent(this@HomeActivity, ListActivity::class.java)
-//                intent.putExtra(ListActivity.BUNDLE_EXTRA_CATEGORY_NAME, categoryName)
-//                startActivity(intent)
+                val intent = Intent(this@HomeActivity, ListActivity::class.java)
+                intent.putExtra(ListActivity.BUNDLE_EXTRA_CATEGORY_NAME, categoryName)
+                startActivity(intent)
             }
         })
         getAllCategories()
@@ -102,7 +105,7 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                     nearByCategories.add(NearByCategory(child.child("icon").value as String,
                             child.child("name").value as String,
                             child.child("thumbnail").value as String))
-                    Log.d("----dnfkcnsk----",""+child.childrenCount);
+                    Log.d("----dnfkcnsk----", "" + child.childrenCount);
                 }
                 categoryAdapter?.addAllCategories(nearByCategories)
             }
@@ -233,9 +236,6 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
