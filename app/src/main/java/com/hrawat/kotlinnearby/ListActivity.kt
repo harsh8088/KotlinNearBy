@@ -53,7 +53,7 @@ class ListActivity : AppCompatActivity() {
         if (bundle?.get(BUNDLE_EXTRA_CATEGORY_NAME) != null) {
             categoryName = bundle.get(BUNDLE_EXTRA_CATEGORY_NAME) as String
         }
-        init()
+        initView()
         if (bundle != null && bundle.containsKey(BUNDLE_EXTRA_CATEGORY_NAME)) {
             etSearch.setText(categoryName)
         }
@@ -61,7 +61,7 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-    fun init() {
+    private fun initView() {
 
         recyclerViewList = findViewById(R.id.recycler_view)
         listAdapter = ListAdapter(this@ListActivity)

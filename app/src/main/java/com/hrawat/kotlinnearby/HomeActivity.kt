@@ -47,13 +47,14 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        init()
+        initView()
     }
 
-    private fun init() {
+    private fun initView() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -110,8 +111,28 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 categoryAdapter?.addAllCategories(nearByCategories)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
+            override fun onCancelled(databaseError: DatabaseError) {
+                getDataCategories()
+            }
         })
+    }
+
+    private fun getDataCategories() {
+        val nearByCategories = ArrayList<NearByCategory>()
+        nearByCategories.add(NearByCategory("", "Bars", ""))
+        nearByCategories.add(NearByCategory("", "Hotels", ""))
+        nearByCategories.add(NearByCategory("", "Restaurants", ""))
+        nearByCategories.add(NearByCategory("", "Bus Stations", ""))
+        nearByCategories.add(NearByCategory("", "Pharmacy", ""))
+        nearByCategories.add(NearByCategory("", "Shopping Malls", ""))
+        nearByCategories.add(NearByCategory("", "Grocery Store", ""))
+        nearByCategories.add(NearByCategory("", "Service Center", ""))
+        nearByCategories.add(NearByCategory("", "Hospitals", ""))
+        nearByCategories.add(NearByCategory("", "Petrol Pumps", ""))
+        nearByCategories.add(NearByCategory("", "Game Parlours", ""))
+        nearByCategories.add(NearByCategory("", "Railway Stations", ""))
+        categoryAdapter.addAllCategories(nearByCategories)
+
     }
 
     override fun onStart() {
