@@ -19,8 +19,8 @@ import java.util.*
 class ListAdapter(private var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private  var items= ArrayList<ListModel>()
-    private  var placeResultModelList= ArrayList<PlaceResultModel>()
+    private var items = ArrayList<ListModel>()
+    private var placeResultModelList = ArrayList<PlaceResultModel>()
     private val TYPE_LOADING = 1
     private val TYPE_LIST = TYPE_LOADING + 1
     private val TYPE_EMPTY = TYPE_LIST + 1
