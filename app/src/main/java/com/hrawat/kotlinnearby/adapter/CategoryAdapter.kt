@@ -1,20 +1,20 @@
 package com.hrawat.kotlinnearby.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.hrawat.kotlinnearby.R
 import com.hrawat.kotlinnearby.model.NearByCategory
-import java.util.*
 
 /**
  * Created by hrawat on 11/1/2017.
  */
-class CategoryAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CategoryAdapter(private val context: Context) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var categoryListener: CategoryListener? = null
     private var nearByCategoryList = ArrayList<NearByCategory>()
@@ -33,18 +33,16 @@ class CategoryAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
         return nearByCategoryList.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CategoryViewHolder) {
             val details = nearByCategoryList[position]
-//        viewHolder.icon.(details.getIcon());
-//        viewHolder.background
             holder.categoryName.text = details.name
             holder.background.setOnClickListener(View.OnClickListener
             { categoryListener?.onCategoryClick(this@CategoryAdapter, details.name) })
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_nearby_category_list, null)
         return CategoryViewHolder(view)
     }

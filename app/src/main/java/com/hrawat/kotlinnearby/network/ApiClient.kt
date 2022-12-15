@@ -15,17 +15,17 @@ class ApiClient {
 
         fun getClient(): Retrofit {
             retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
             return retrofit
         }
 
         fun getPlacesClient(): Retrofit {
             retrofit = Retrofit.Builder()
-                    .baseUrl(PLACE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
+                .baseUrl(PLACE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
             return retrofit
         }
     }

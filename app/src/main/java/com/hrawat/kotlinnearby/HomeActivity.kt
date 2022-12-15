@@ -7,21 +7,20 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -31,13 +30,12 @@ import com.hrawat.kotlinnearby.model.NearByCategory
 import com.orhanobut.hawk.Hawk
 import java.util.*
 
-class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
+class HomeActivity : AppCompatActivity() {
 
     companion object {
-        val LOCATION_LATITUDE: String = "LOCATION_LATITUDE"
-        val LOCATION_LONGITUTE: String = "LOCATION_LONGITUTE"
+        const val LOCATION_LATITUDE: String = "LOCATION_LATITUDE"
+        const val LOCATION_LONGITUTE: String = "LOCATION_LONGITUTE"
     }
-
 
     private val TAG = this.javaClass.name
     private lateinit var categoryAdapter: CategoryAdapter
@@ -60,10 +58,11 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         setSupportActionBar(toolbar)
         categoryAdapter = CategoryAdapter(this@HomeActivity)
         val recyclerView = findViewById<RecyclerView>(R.id.rv_category)
-        val mLayoutManager = GridLayoutManager(this, 2)
+        val mLayoutManager =
+            GridLayoutManager(this, 2)
         recyclerView.layoutManager = mLayoutManager
         recyclerView.adapter = categoryAdapter
-        categoryAdapter!!.setCategoryListener(object : CategoryAdapter.CategoryListener {
+        categoryAdapter.setCategoryListener(object : CategoryAdapter.CategoryListener {
             override fun onCategoryClick(categoryAdapter: CategoryAdapter, categoryName: String) {
                 val intent = Intent(this@HomeActivity, ListActivity::class.java)
                 intent.putExtra(ListActivity.BUNDLE_EXTRA_CATEGORY_NAME, categoryName)
@@ -103,12 +102,16 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (child in snapshot.children) {
-                    nearByCategories.add(NearByCategory(child.child("icon").value as String,
+                    nearByCategories.add(
+                        NearByCategory(
+                            child.child("icon").value as String,
                             child.child("name").value as String,
-                            child.child("thumbnail").value as String))
+                            child.child("thumbnail").value as String
+                        )
+                    )
                     Log.d("----dnfkcnsk----", "" + child.childrenCount);
                 }
-                categoryAdapter?.addAllCategories(nearByCategories)
+                categoryAdapter.addAllCategories(nearByCategories)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -146,17 +149,19 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
 
 
     private fun requestPermissions() {
-        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
         // Provide an additional rationale to the user. This would happen if the user denied the
         // request previously, but didn't check the "Don't ask again" checkbox.
         if (shouldProvideRationale) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.")
             showSnackbar(R.string.permission_rationale, android.R.string.ok,
-                    View.OnClickListener {
-                        // Request permission
-                        startLocationPermissionRequest()
-                    })
+                View.OnClickListener {
+                    // Request permission
+                    startLocationPermissionRequest()
+                })
         } else {
             Log.i(TAG, "Requesting permission")
             // Request permission. It's possible this can be auto answered if device policy
@@ -167,14 +172,18 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
     }
 
     private fun startLocationPermissionRequest() {
-        ActivityCompat.requestPermissions(this@HomeActivity,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                REQUEST_PERMISSIONS_REQUEST_CODE)
+        ActivityCompat.requestPermissions(
+            this@HomeActivity,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            REQUEST_PERMISSIONS_REQUEST_CODE
+        )
     }
 
     private fun checkPermissions(): Boolean {
-        val permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
+        val permissionState = ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
         return permissionState == PackageManager.PERMISSION_GRANTED
     }
 
@@ -188,23 +197,27 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
      */
     @SuppressWarnings("MissingPermission")
     private fun getLastLocation() {
-        mFusedLocationClient?.getLastLocation()
-                ?.addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful && task.result != null) {
-                        mLastLocation = task.result
-                        Hawk.put(LOCATION_LATITUDE, mLastLocation.latitude)
-                        Hawk.put(LOCATION_LONGITUTE, mLastLocation.longitude)
-                        Log.w(TAG, "LatLong: " + mLastLocation.latitude +
-                                " , " + mLastLocation.longitude)
-                        //                            Toast.makeText(HomeActivity.this, "LatLong:" + mLastLocation.getLatitude()
-                        //                                            + " " + mLastLocation.getLongitude(),
-                        //                                    Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.w(TAG, "getLastLocation:exception", task.exception)
-                        Toast.makeText(this@HomeActivity, "no_location_detected",
-                                Toast.LENGTH_SHORT).show()
-                    }
+        mFusedLocationClient.lastLocation
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful && task.result != null) {
+                    mLastLocation = task.result
+                    Hawk.put(LOCATION_LATITUDE, mLastLocation.latitude)
+                    Hawk.put(LOCATION_LONGITUTE, mLastLocation.longitude)
+                    Log.w(
+                        TAG, "LatLong: " + mLastLocation.latitude +
+                                " , " + mLastLocation.longitude
+                    )
+                    //                            Toast.makeText(HomeActivity.this, "LatLong:" + mLastLocation.getLatitude()
+                    //                                            + " " + mLastLocation.getLongitude(),
+                    //                                    Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.w(TAG, "getLastLocation:exception", task.exception)
+                    Toast.makeText(
+                        this@HomeActivity, "no_location_detected",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
     }
 
     /**
@@ -214,18 +227,27 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
      * @param actionStringId   The text of the action item.
      * @param listener         The listener associated with the Snackbar action.
      */
-    private fun showSnackbar(mainTextStringId: Int, actionStringId: Int,
-                             listener: View.OnClickListener) {
-        Snackbar.make(findViewById<View>(android.R.id.content),
-                getString(mainTextStringId),
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(actionStringId), listener).show()
+    private fun showSnackbar(
+        mainTextStringId: Int, actionStringId: Int,
+        listener: View.OnClickListener
+    ) {
+        Snackbar.make(
+            findViewById<View>(android.R.id.content),
+            getString(mainTextStringId),
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(getString(actionStringId), listener).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Log.i(TAG, "onRequestPermissionResult")
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.size <= 0) {
+            if (grantResults.isEmpty()) {
                 // If user interaction was interrupted, the permission request is cancelled and you
                 // receive empty arrays.
                 Log.i(TAG, "User interaction was cancelled.")
@@ -243,23 +265,21 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 // when permissions are denied. Otherwise, your app could appear unresponsive to
                 // touches or interactions which have required permissions.
                 showSnackbar(R.string.permission_denied_explanation, R.string.settings,
-                        View.OnClickListener {
-                            // Build intent that displays the App settings screen.
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts("package",
-                                    BuildConfig.APPLICATION_ID, null)
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        })
+                    View.OnClickListener {
+                        // Build intent that displays the App settings screen.
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts(
+                            "package",
+                            "com.hrawat.kotlinnearby", null
+                        )
+                        intent.data = uri
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                    })
             }
         }
     }
 
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
 }

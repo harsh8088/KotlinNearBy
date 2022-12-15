@@ -11,9 +11,11 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @POST("json")
-    abstract fun getNearByPlaces(@Query("location") location: String,
-                                 @Query("radius") radius: String,
-                                 @Query("type") type: String,
-                                 @Query("keyword") keyword: String,
-                                 @Query("key") apiServerKey: String): Call<SearchResults>
+    abstract fun getNearByPlaces(
+        @Query("location") location: String,
+        @Query("radius") radius: String,
+        @Query("type") type: String,
+        @Query("keyword") keyword: String,
+        @Query("key") apiServerKey: String
+    ): Call<SearchResults>
 }
